@@ -8,10 +8,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 public class MessageRequest {
-
-
     private String sender;
     private String body;
-    private MessageStatus status = MessageStatus.SEND;
-
 }
