@@ -2,7 +2,6 @@ package com.betaChat.chatServer.controller;
 
 import com.betaChat.chatServer.dto.Message;
 import com.betaChat.chatServer.dto.MessageRequest;
-import com.betaChat.chatServer.dto.MessageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
