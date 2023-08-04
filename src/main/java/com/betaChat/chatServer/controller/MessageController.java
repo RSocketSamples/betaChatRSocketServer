@@ -17,12 +17,12 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @MessageMapping("send")
+    @MessageMapping("cretae.message")
     public Mono<Message> sendMessage(Mono<MessageRequest> request){
         return messageService.saveMessage(request);
     }
 
-    @MessageMapping("messages")
+    @MessageMapping("list.messages")
     public Flux<Message> getMessages(){
         return messageService.getAllMessages();
     }
