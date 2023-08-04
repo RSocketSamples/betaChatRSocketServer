@@ -1,14 +1,14 @@
 package com.betaChat.chatServer.service;
 
-import com.betaChat.chatServer.dto.Message;
-import com.betaChat.chatServer.dto.MessageRepository;
 import com.betaChat.chatServer.dto.MessageRequest;
+import com.betaChat.chatServer.entity.Message;
+import com.betaChat.chatServer.repository.MessageRepository;
+
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class MessageService {

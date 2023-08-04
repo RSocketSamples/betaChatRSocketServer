@@ -1,4 +1,4 @@
-package com.betaChat.chatServer.dto;
+package com.betaChat.chatServer.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
