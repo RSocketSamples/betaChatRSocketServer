@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -18,7 +19,8 @@ public class Message {
 
     @Id
     private String id;
-    private String sender;
+    @DBRef
+    private User sender;
     private String body;
     @CreatedDate
     private Date createdAt;

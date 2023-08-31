@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRequest {
     private String nickname;
+    private String profileImage;
 }

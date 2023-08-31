@@ -25,6 +25,7 @@ public class UserService {
         return request.flatMap(userRequest -> {
             User user = new User();
             user.setNickname(userRequest.getNickname());
+            user.setProfileImage(userRequest.getProfileImage());
             return userRepository.save(user);
         });
     }

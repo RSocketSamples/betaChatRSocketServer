@@ -17,9 +17,10 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @MessageMapping("cretae.message")
-    public Mono<Message> sendMessage(Mono<MessageRequest> request){
-        return messageService.saveMessage(request);
+    @MessageMapping("create.message")
+    public Mono<Void> sendMessage(Mono<MessageRequest> request){
+         messageService.saveMessage(request).subscribe();
+         return Mono.empty();
     }
 
     @MessageMapping("list.messages")
