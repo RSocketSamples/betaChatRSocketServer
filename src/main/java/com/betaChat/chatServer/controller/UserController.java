@@ -1,5 +1,6 @@
 package com.betaChat.chatServer.controller;
 
+import com.betaChat.chatServer.dto.FindUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
@@ -27,4 +28,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @MessageMapping("find.user")
+    public Mono<User> findUser(Mono<FindUserRequest> request){
+        return userService.findUser(request);
+    }
 }
