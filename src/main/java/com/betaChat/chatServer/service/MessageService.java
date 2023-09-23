@@ -6,6 +6,7 @@ import com.betaChat.chatServer.entity.User;
 import com.betaChat.chatServer.repository.MessageRepository;
 
 import com.betaChat.chatServer.repository.UserRepository;
+import io.rsocket.transport.netty.client.TcpClientTransport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.stereotype.Service;
@@ -22,22 +23,30 @@ public class MessageService {
     private UserRepository userRepository;
 
     private RSocketRequester rSocketRequester;
-    @Autowired
-    public void ChangeNotificationService(RSocketRequester.Builder rSocketRequesterBuilder) {
-        this.rSocketRequester = rSocketRequesterBuilder.connectTcp("localhost", 4200).block();
-    }
 
+    @Autowired
+    public void ChangeNotificationService(@org.jetbrains.annotations.NotNull RSocketRequester.Builder rSocketRequesterBuilder) {
+        try {
+            this.rSocketRequester = rSocketRequesterBuilder.transport(TcpClientTransport.create("localhost", 4200));
+        } catch (Exception e) {
+            System.out.println("catch");
+            this.rSocketRequester = null;
+        }
+    }
     public MessageService(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 
     public Flux<Message> getAllMessages() {
         Flux<Message> messagesList = messageRepository.findAllByOrderByCreatedAtDesc();
-        messagesList.subscribe(this::notifyClients);
+        if (this.rSocketRequester != null) {
+            messagesList.subscribe(this::notifyClients);
+        }
         return messagesList;
     }
 
     public void notifyClients(Object data) {
+        System.out.println(data);
         rSocketRequester.route("list.messages").data(data).send().subscribe();
     }
 
@@ -51,7 +60,9 @@ public class MessageService {
                 message.setBody(messageRequest.getBody());
                 message.setCreatedAt(new Date());
                 message.setUpdatedAt(new Date());
-                this.notifyClients(message);
+                if (this.rSocketRequester != null) {
+                    this.notifyClients(message);
+                }
                 return messageRepository.save(message);
             });
         });
