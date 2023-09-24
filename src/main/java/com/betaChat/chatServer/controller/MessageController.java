@@ -18,9 +18,8 @@ public class MessageController {
     private MessageService messageService;
 
     @MessageMapping("create.message")
-    public Mono<Void> sendMessage(Mono<MessageRequest> request){
-         messageService.saveMessage(request).subscribe();
-         return Mono.empty();
+    public Mono<Message> sendMessage(Mono<MessageRequest> request){
+         return messageService.saveMessage(request);
     }
 
     @MessageMapping("list.messages")
