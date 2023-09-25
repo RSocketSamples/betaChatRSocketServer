@@ -26,7 +26,7 @@ public class MessageService {
     }
 
     public Flux<Message> getAllMessages() {
-        Flux<Message> messagesList = messageRepository.findAllByOrderByCreatedAtDesc();
+        Flux<Message> messagesList = messageRepository.findAllByOrderByCreatedAtAsc();
         return messagesList;
     }
 
